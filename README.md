@@ -3,7 +3,7 @@ vijos-bukkit-auth
 
 vijos-bukkit-auth is a CraftBukkit plugin originated from [MineLoginPlugin](https://gitcafe.com/MineLogin/MineLoginPlugin).
 
-# Features:
+# Features
 
 - HTTP(s)-API-based authorization
 - Customize authorization URI
