@@ -1,0 +1,23 @@
+name: VijosLogin
+version: 1
+main: com.vijoslogin.VijosLogin
+authors: [Breezewish]
+commands:
+    login:
+        description: 登录
+        usage: /<command> [password]
+        permission: vijoslogin.login
+        permission-message: 您没有权限
+    logout:
+        description: 注销
+        usage: /<command>
+        permission: vijoslogin.login
+        permission-message: 您没有权限
+permissions:
+    vijoslogin.*:
+        description: 给予所有VijosAuth的权限
+        children:
+            vijoslogin.login: true
+    vijoslogin.login:
+        description: 允许用户使用在游戏内登录、登出
+        default: true
