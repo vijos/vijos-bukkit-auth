@@ -12,11 +12,12 @@ vijos-bukkit-auth is a CraftBukkit plugin originated from [MineLoginPlugin](http
 
 ```
 Login:
-  AtSpawn: true		# teleport to spawnpoint
-  Chat: false		# allow chat when user isn't login
+  AtSpawn: true                         # teleport to spawnpoint
 API:
-  StatusURI: https://localhost/status	# query user existance
-  LoginURI: https://localhost/login		# check password
+  HashMethod: md5                       # hash method (md5/sha1/sha256/plain)
+  CheckCredentials: false               # check SSL credentials
+  StatusURI: https://localhost/status   # query user existance
+  LoginURI: https://localhost/login     # check password
 ```
 
 # API
@@ -76,11 +77,14 @@ else
 ?>
 ```
 
-# Warning
+# TODO
 
-The plugin **DOES NOT** verify server credentials (HTTPS)!
+Please be free to contribute to this project!
 
-If you want it work, please modify `src/com/vijoslogin/lib/URIPost.java`.
+- Permission
+- Sessions
+- Combine multiple notice messages
+- "Logged in from another location" protection
 
 # Licence
 
