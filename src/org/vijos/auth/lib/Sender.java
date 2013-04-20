@@ -1,5 +1,6 @@
-package com.vijoslogin.lib;
+package org.vijos.auth.lib;
 
+import org.vijos.auth.data.Settings;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -16,51 +17,53 @@ import javax.net.ssl.SSLSocketFactory;
 import javax.net.ssl.TrustManager;
 import javax.net.ssl.X509TrustManager;
 
-public class URIPost {
+public class Sender {
 
-	public URIPost() {
+	public Sender() {
 		
-		//Trust all certificates
-		
-		try {
-			// get ssl context
-			SSLContext sc = SSLContext.getInstance("SSL");
-
-			// Create empty HostnameVerifier
-			HostnameVerifier hv = new HostnameVerifier() {
-				public boolean verify(String urlHostName, SSLSession session) {
-					return true;
-				}
-			};
-
-			// Create a trust manager that does not validate certificate chains
-			TrustManager[] trustAllCerts = new TrustManager[] { new X509TrustManager() {
-				public java.security.cert.X509Certificate[] getAcceptedIssuers() {
-					return null;
-				}
-
-				public void checkClientTrusted(
-						java.security.cert.X509Certificate[] certs,
-						String authType) {
-				}
-
-				public void checkServerTrusted(
-						java.security.cert.X509Certificate[] certs,
-						String authType) {
-				}
-			} };
-
-			sc.init(null, trustAllCerts, new java.security.SecureRandom());
-			SSLSocketFactory sslSocketFactory = sc.getSocketFactory();
-
-			HttpsURLConnection.setDefaultSSLSocketFactory(sslSocketFactory);
-			HttpsURLConnection.setDefaultHostnameVerifier(hv);
-		} catch (Exception e) {
-			e.printStackTrace();
+		if (Settings.i().getBoolean("API.CheckCredentials") == false)
+		{
+			try {
+				// get ssl context
+				SSLContext sc = SSLContext.getInstance("SSL");
+	
+				// Create empty HostnameVerifier
+				HostnameVerifier hv = new HostnameVerifier() {
+					public boolean verify(String urlHostName, SSLSession session) {
+						return true;
+					}
+				};
+	
+				// Create a trust manager that does not validate certificate chains
+				TrustManager[] trustAllCerts = new TrustManager[] { new X509TrustManager() {
+					public java.security.cert.X509Certificate[] getAcceptedIssuers() {
+						return null;
+					}
+	
+					public void checkClientTrusted(
+							java.security.cert.X509Certificate[] certs,
+							String authType) {
+					}
+	
+					public void checkServerTrusted(
+							java.security.cert.X509Certificate[] certs,
+							String authType) {
+					}
+				} };
+	
+				sc.init(null, trustAllCerts, new java.security.SecureRandom());
+				SSLSocketFactory sslSocketFactory = sc.getSocketFactory();
+	
+				HttpsURLConnection.setDefaultSSLSocketFactory(sslSocketFactory);
+				HttpsURLConnection.setDefaultHostnameVerifier(hv);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 		}
+		
 	}
 
-	public static String getPost(String postUrl, String stringBuffer) throws IOException {
+	public static String Post(String postUrl, String stringBuffer) throws IOException {
 		
 		URL url = new URL(postUrl);
 		URLConnection uc = url.openConnection();

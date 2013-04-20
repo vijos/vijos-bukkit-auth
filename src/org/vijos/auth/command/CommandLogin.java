@@ -1,10 +1,10 @@
-package com.vijoslogin.command;
+package org.vijos.auth.command;
 
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-import com.vijoslogin.VijosLogin;
-import com.vijoslogin.lib.API;
+import org.vijos.auth.VijosLogin;
+import org.vijos.auth.lib.API;
 
 public class CommandLogin {
 	

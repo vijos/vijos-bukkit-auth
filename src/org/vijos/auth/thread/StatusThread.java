@@ -1,10 +1,10 @@
-package com.vijoslogin.thread;
+package org.vijos.auth.thread;
 
 import org.bukkit.entity.Player;
 
-import com.vijoslogin.VijosLogin;
-import com.vijoslogin.data.MessageData;
-import com.vijoslogin.lib.API;
+import org.vijos.auth.VijosLogin;
+import org.vijos.auth.data.Messages;
+import org.vijos.auth.lib.API;
 
 public class StatusThread extends LoginThread {
 	
@@ -17,7 +17,7 @@ public class StatusThread extends LoginThread {
 			return;
 		
 		if (!this.player.hasPermission("vijoslogin.login") && player.isOnline()) {
-			player.kickPlayer(MessageData.i().getMessage("Login.Out"));
+			player.kickPlayer(Messages.i().getMessage("Login.Out"));
 		}
 		
 		if (this.getLogin()) {
@@ -32,11 +32,11 @@ public class StatusThread extends LoginThread {
 			return true;
 		
 		if (line == 1) {
-			this.player.kickPlayer(MessageData.i().getMessage("Ban"));
+			this.player.kickPlayer(Messages.i().getMessage("Ban"));
 			return false;
 		}
 		
-		this.player.kickPlayer(MessageData.i().getMessage("UserNotExists"));
+		this.player.kickPlayer(Messages.i().getMessage("UserNotExists"));
 		return false;
 	}
 }

@@ -1,4 +1,4 @@
-package com.vijoslogin.command;
+package org.vijos.auth.command;
 
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;

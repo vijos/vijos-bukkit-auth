@@ -1,26 +1,26 @@
-package com.vijoslogin.data;
+package org.vijos.auth.data;
 
 import java.util.Hashtable;
 import org.bukkit.Location;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-import com.vijoslogin.thread.LoginThread;
+import org.vijos.auth.thread.LoginThread;
 
-public class LoginData {
+public class Sessions {
 	
-	private static LoginData instance;
+	private static Sessions instance;
 	
 	public Hashtable<String, Long> loginState;
 	public Hashtable<String, Location> locations;
 	public Hashtable<String, LoginThread> loging;
 	
-	public static LoginData i() {
-		return LoginData.instance;
+	public static Sessions i() {
+		return Sessions.instance;
 	}
 	
-	public LoginData() {
-		LoginData.instance = this;
+	public Sessions() {
+		Sessions.instance = this;
 		
 		this.loginState = new Hashtable<String, Long>();
 		this.locations = new Hashtable<String, Location>();

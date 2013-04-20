@@ -1,4 +1,4 @@
-package com.vijoslogin.listener;
+package org.vijos.auth.listener;
 
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
@@ -13,8 +13,8 @@ import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.event.player.PlayerPickupItemEvent;
 import org.bukkit.event.player.PlayerRespawnEvent;
 
-import com.vijoslogin.VijosLogin;
-import com.vijoslogin.data.LoginData;
+import org.vijos.auth.VijosLogin;
+import org.vijos.auth.data.Sessions;
 
 public class PlayerListener implements Listener {
 	
@@ -25,7 +25,7 @@ public class PlayerListener implements Listener {
 		if (player == null)
 			return;
 		
-		if (!LoginData.i().getLogin(event.getPlayer())) {
+		if (!Sessions.i().getLogin(event.getPlayer())) {
 			
 			//Login
 			if (event.getMessage().toLowerCase().indexOf("/login") == 0)
@@ -45,7 +45,7 @@ public class PlayerListener implements Listener {
 		if (player == null)
 			return;
 		
-		if (!LoginData.i().getLogin(player))
+		if (!Sessions.i().getLogin(player))
 			event.setCancelled(true);
 	}
 	
@@ -56,7 +56,7 @@ public class PlayerListener implements Listener {
 		if (player == null)
 			return;
 		
-		if (!LoginData.i().getLogin(player)) {
+		if (!Sessions.i().getLogin(player)) {
 			VijosLogin.i().sendLoginMessage(player);
 			event.setCancelled(true);
 		}
@@ -64,18 +64,12 @@ public class PlayerListener implements Listener {
 	
 	@EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
 	public void onPlayerMove(PlayerMoveEvent event) {	
-		/*
 		Player player = event.getPlayer();
 		if (player == null) return;
-		if (LoginData.i().getLogin(player)) return;
+		if (Sessions.i().getLogin(player)) return;
 		
 		VijosLogin.i().sendLoginMessage(player);
-		
-		if (ConfigData.i().getBoolean("Login.AtSpawn"))
-			event.setTo(event.getPlayer().getWorld().getSpawnLocation());
-		else
-			event.setTo(event.getFrom());
-		*/
+		event.setTo(event.getFrom());
 	}
 	
 	@EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
@@ -83,7 +77,7 @@ public class PlayerListener implements Listener {
 		Player player = event.getPlayer();
 		
 		if (player == null) return;
-		if (LoginData.i().getLogin(player)) return;
+		if (Sessions.i().getLogin(player)) return;
 		
 		VijosLogin.i().sendLoginMessage(player);
 		event.getItem().setPickupDelay(30);
@@ -95,7 +89,7 @@ public class PlayerListener implements Listener {
 		Entity entity = event.getEntity();
 		
 		if (entity == null) return;
-		if (entity instanceof Player && !LoginData.i().getLogin((Player) entity))
+		if (entity instanceof Player && !Sessions.i().getLogin((Player) entity))
 			event.setCancelled(true);
 	}
 	
@@ -105,7 +99,7 @@ public class PlayerListener implements Listener {
 		if (entity == null) return;
 		
 		final Player player = (Player) entity;
-		if (LoginData.i().getLogin(player))
+		if (Sessions.i().getLogin(player))
 			return;
 		
 		VijosLogin.i().getServer().getScheduler().runTaskLaterAsynchronously(VijosLogin.i(), new Runnable() {

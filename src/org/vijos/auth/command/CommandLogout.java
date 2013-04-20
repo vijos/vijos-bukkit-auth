@@ -1,11 +1,11 @@
-package com.vijoslogin.command;
+package org.vijos.auth.command;
 
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-import com.vijoslogin.data.ConfigData;
-import com.vijoslogin.data.LoginData;
-import com.vijoslogin.data.MessageData;
+import org.vijos.auth.data.Settings;
+import org.vijos.auth.data.Sessions;
+import org.vijos.auth.data.Messages;
 
 public class CommandLogout {
 	
@@ -22,16 +22,16 @@ public class CommandLogout {
 		
 		if (args.length != 0) return false; 
 		
-		if (LoginData.i().getLogin(sender) == false){
-			sender.sendMessage(MessageData.i().getMessage("Logout.Fail"));
+		if (Sessions.i().getLogin(sender) == false){
+			sender.sendMessage(Messages.i().getMessage("Logout.Fail"));
 			return true;
 		}
 		
-		LoginData.i().delLogin(sender);
-		sender.sendMessage(MessageData.i().getMessage("Logout.Success"));
+		Sessions.i().delLogin(sender);
+		sender.sendMessage(Messages.i().getMessage("Logout.Success"));
 		
-		if (ConfigData.i().getBoolean("Login.AtSpawn")) {
-			LoginData.i().locations.put(player.getName().toLowerCase(), player.getLocation());
+		if (Settings.i().getBoolean("Login.AtSpawn")) {
+			Sessions.i().locations.put(player.getName().toLowerCase(), player.getLocation());
 			player.teleport(player.getWorld().getSpawnLocation());
 		}
 		

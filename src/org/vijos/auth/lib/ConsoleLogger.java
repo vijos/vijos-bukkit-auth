@@ -1,21 +1,21 @@
-package com.vijoslogin.lib;
+package org.vijos.auth.lib;
 
 import java.util.logging.Logger;
 
-import com.vijoslogin.VijosLogin;
+import org.vijos.auth.VijosLogin;
 
-public class MsgLogger {
+public class ConsoleLogger {
 	
-	private static MsgLogger instance;
+	private static ConsoleLogger instance;
 	
 	private Logger logger;
 	
-	public static MsgLogger i() {
-		return MsgLogger.instance;
+	public static ConsoleLogger i() {
+		return ConsoleLogger.instance;
 	}
 	
-	public MsgLogger() {
-		MsgLogger.instance = this;
+	public ConsoleLogger() {
+		ConsoleLogger.instance = this;
 		this.logger = VijosLogin.i().getLogger();
 	}
 	

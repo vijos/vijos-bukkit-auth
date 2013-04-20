@@ -1,4 +1,4 @@
-package com.vijoslogin.listener;
+package org.vijos.auth.listener;
 
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -7,10 +7,10 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 
-import com.vijoslogin.VijosLogin;
-import com.vijoslogin.data.ConfigData;
-import com.vijoslogin.data.LoginData;
-import com.vijoslogin.thread.StatusThread;
+import org.vijos.auth.VijosLogin;
+import org.vijos.auth.data.Settings;
+import org.vijos.auth.data.Sessions;
+import org.vijos.auth.thread.StatusThread;
 
 public class LoginListener implements Listener {
 	
@@ -22,8 +22,8 @@ public class LoginListener implements Listener {
 	public void onPlayerJoin(PlayerJoinEvent event) {
 		final Player player = event.getPlayer();
 		
-		if (ConfigData.i().getBoolean("Login.AtSpawn")) {
-			LoginData.i().locations.put(player.getName().toLowerCase(), player.getLocation());
+		if (Settings.i().getBoolean("Login.AtSpawn")) {
+			Sessions.i().locations.put(player.getName().toLowerCase(), player.getLocation());
 			player.teleport(player.getWorld().getSpawnLocation());
 		}
 		
@@ -34,13 +34,13 @@ public class LoginListener implements Listener {
 	public void onPlayerQuit(PlayerQuitEvent event) {
 		final Player player = event.getPlayer();
 		
-		if (!LoginData.i().getLogin(player) && LoginData.i().locations.containsKey(player.getName().toLowerCase()))
-			player.teleport(LoginData.i().locations.get(player.getName().toLowerCase()));
+		if (!Sessions.i().getLogin(player) && Sessions.i().locations.containsKey(player.getName().toLowerCase()))
+			player.teleport(Sessions.i().locations.get(player.getName().toLowerCase()));
 		
-		if (LoginData.i().locations.containsKey(player.getName().toLowerCase()))
-			LoginData.i().locations.remove(player.getName().toLowerCase());
+		if (Sessions.i().locations.containsKey(player.getName().toLowerCase()))
+			Sessions.i().locations.remove(player.getName().toLowerCase());
 		
-		LoginData.i().delLogin(player);
+		Sessions.i().delLogin(player);
 	}
 	
 }

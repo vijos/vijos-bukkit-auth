@@ -1,4 +1,4 @@
-package com.vijoslogin;
+package org.vijos.auth;
 
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -6,17 +6,17 @@ import org.bukkit.entity.Player;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import com.vijoslogin.command.CommandMain;
-import com.vijoslogin.data.ConfigData;
-import com.vijoslogin.data.MessageData;
-import com.vijoslogin.data.LoginData;
-import com.vijoslogin.lib.API;
-import com.vijoslogin.lib.MsgLogger;
-import com.vijoslogin.listener.BlockListener;
-import com.vijoslogin.listener.PlayerListener;
-import com.vijoslogin.listener.LoginListener;
-import com.vijoslogin.lib.MD5;
-import com.vijoslogin.lib.URIPost;
+import org.vijos.auth.command.CommandMain;
+import org.vijos.auth.data.Settings;
+import org.vijos.auth.data.Messages;
+import org.vijos.auth.data.Sessions;
+import org.vijos.auth.lib.API;
+import org.vijos.auth.lib.ConsoleLogger;
+import org.vijos.auth.listener.BlockListener;
+import org.vijos.auth.listener.PlayerListener;
+import org.vijos.auth.listener.LoginListener;
+import org.vijos.auth.lib.Hash;
+import org.vijos.auth.lib.Sender;
 
 public class VijosLogin extends JavaPlugin {
 	
@@ -29,15 +29,14 @@ public class VijosLogin extends JavaPlugin {
 	public void onEnable() {
 		VijosLogin.instance = this;
 		
-		new MD5();
-		new URIPost();
-		
-		new MsgLogger();
-		new CommandMain();
-		new MessageData();
-		new ConfigData();
-		new LoginData();
+		new Settings();
 		new API();
+		new ConsoleLogger();
+		new Hash();
+		new Sender();
+		new CommandMain();
+		new Messages();
+		new Sessions();
 		
 		PluginManager manager = getServer().getPluginManager();
 		
@@ -47,15 +46,15 @@ public class VijosLogin extends JavaPlugin {
 	}
 	
 	public void sendLoginMessage(Player player) {
-		if (LoginData.i().loging.containsKey(player.getName().toLowerCase())) {
-			player.sendMessage(MessageData.i().getMessage("Login.Ing"));
+		if (Sessions.i().loging.containsKey(player.getName().toLowerCase())) {
+			player.sendMessage(Messages.i().getMessage("Login.Ing"));
 			return;
 		}
-		player.sendMessage(MessageData.i().getMessage("Login.Tip"));
+		player.sendMessage(Messages.i().getMessage("Login.Tip"));
 	}
 	
 	public void onDisable() {
-		MsgLogger.i().info("Plugin disabled.");
+		ConsoleLogger.i().info("Plugin disabled.");
 	}
 	
 	public boolean onCommand(CommandSender sender, Command cmd, String commandLabel, String[] args) {

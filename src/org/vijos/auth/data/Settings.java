@@ -1,25 +1,27 @@
-package com.vijoslogin.data;
+package org.vijos.auth.data;
 
 import java.io.File;
 import java.io.IOException;
 
 import org.bukkit.configuration.file.YamlConfiguration;
 
-import com.vijoslogin.VijosLogin;
+import org.vijos.auth.VijosLogin;
 
-public class ConfigData {
+public class Settings {
 	
-	private static ConfigData instance;
+	public static String HashMethod = "md5";
+	
+	private static Settings instance;
 	
 	private YamlConfiguration config;
 	private File configFile;
 	
-	public static ConfigData i() {
-		return ConfigData.instance;
+	public static Settings i() {
+		return Settings.instance;
 	}
 	
-	public ConfigData() {
-		ConfigData.instance = this;
+	public Settings() {
+		Settings.instance = this;
 		
 		this.configFile = new File(VijosLogin.i().getDataFolder(), "config.yml");
 		this.loadConfig();
@@ -28,11 +30,14 @@ public class ConfigData {
 	public void loadConfig() {
 		this.config = YamlConfiguration.loadConfiguration(this.configFile);
 		this.config.addDefault("Login.AtSpawn", true);
-		this.config.addDefault("Login.Chat", false);
+		this.config.addDefault("API.HashMethod", "md5");
+		this.config.addDefault("API.CheckCredentials", false);
 		this.config.addDefault("API.StatusURI", "https://localhost/status");
 		this.config.addDefault("API.LoginURI", "https://localhost/login");
 		this.config.options().copyDefaults(true);
 		this.saveConfig();
+		
+		Settings.HashMethod = instance.getString("API.HashMethod").toLowerCase();
 	}
 	
 	public void saveConfig() {
